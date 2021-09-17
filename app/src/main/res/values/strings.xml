@@ -1,0 +1,26 @@
+<resources>
+    <string name="app_name">Game Chon Hinh Dung</string>
+
+    <string-array name="birdList">
+        <item>b1</item>
+        <item>b2</item>
+        <item>b3</item>
+        <item>b4</item>
+        <item>b5</item>
+        <item>b6</item>
+        <item>b7</item>
+        <item>b8</item>
+        <item>b9</item>
+        <item>b10</item>
+        <item>b11</item>
+        <item>b12</item>
+        <item>b13</item>
+        <item>b14</item>
+        <item>b15</item>
+        <item>b16</item>
+        <item>b17</item>
+        <item>b18</item>
+        <item>b19</item>
+        <item>b20</item>
+    </string-array>
+</resources>
