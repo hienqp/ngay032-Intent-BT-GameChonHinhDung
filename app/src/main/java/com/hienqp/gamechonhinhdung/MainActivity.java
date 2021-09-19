@@ -6,6 +6,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.view.Menu;
@@ -30,6 +31,8 @@ public class MainActivity extends AppCompatActivity {
 
     String pictureNameQuestion;
 
+    SharedPreferences luuDiemSo;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -39,6 +42,9 @@ public class MainActivity extends AppCompatActivity {
         imageViewAnswer = (ImageView) findViewById(R.id.imageView_answer);
         textViewScore = (TextView) findViewById(R.id.textView_score);
 
+        luuDiemSo = getSharedPreferences("DiemSoGame", MODE_PRIVATE);
+
+        totalScore = luuDiemSo.getInt("diem", 100);
         textViewScore.setText(String.valueOf(totalScore));
 
         String[] stringsNameOfBird = getResources().getStringArray(R.array.birdList);
@@ -68,6 +74,8 @@ public class MainActivity extends AppCompatActivity {
             if (pictureNameResult.equals(pictureNameQuestion)) {
                 Toast.makeText(MainActivity.this, "Chính Xác \nBạn được cộng 10 điểm", Toast.LENGTH_SHORT).show();
                 totalScore += 10;
+
+                LuuDiem();
                 // đổi hình câu hỏi
                 new CountDownTimer(2000, 100) {
                     @Override
@@ -83,6 +91,7 @@ public class MainActivity extends AppCompatActivity {
             } else {
                 Toast.makeText(MainActivity.this, "Sai Rồi \nBạn bị trừ 5 điểm", Toast.LENGTH_SHORT).show();
                 totalScore -= 5;
+                LuuDiem();
             }
             textViewScore.setText(String.valueOf(totalScore));
         }
@@ -91,6 +100,7 @@ public class MainActivity extends AppCompatActivity {
         if (resultCode == Activity.RESULT_CANCELED) {
             Toast.makeText(MainActivity.this, "Bạn muốn xem lại à\nBạn bị trừ 20 điểm", Toast.LENGTH_SHORT).show();
             totalScore -= 20;
+            LuuDiem();
             textViewScore.setText(String.valueOf(totalScore));
         }
 
@@ -119,5 +129,10 @@ public class MainActivity extends AppCompatActivity {
         int pictureOfBirdID = getResources().getIdentifier(MainActivity.arrayListNameOfBird.get(7), "drawable", getPackageName());
         imageViewQuestion.setImageResource(pictureOfBirdID);
         pictureNameQuestion = MainActivity.arrayListNameOfBird.get(7);
+    }
+
+    private void LuuDiem() {
+        SharedPreferences.Editor editor = luuDiemSo.edit();
+        editor.putInt("diem", totalScore).commit();
     }
 }
